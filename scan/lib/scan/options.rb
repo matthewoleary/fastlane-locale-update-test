@@ -121,6 +121,12 @@ module Scan
                                      code_gen_sensitive: true,
                                      default_value: CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier),
                                      default_value_dynamic: true),
+        FastlaneCore::ConfigItem.new(key: :languages,
+                                     env_name: "SCAN_LANGUAGES",
+                                     description: "Specify languages to configure the simulator's system languages with",
+                                     type: Array,
+                                     optional: true,
+                                     default_value: ['en-US']),                             
 
         # tests to run
         FastlaneCore::ConfigItem.new(key: :only_testing,

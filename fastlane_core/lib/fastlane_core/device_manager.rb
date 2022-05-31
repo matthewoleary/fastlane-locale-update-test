@@ -330,6 +330,19 @@ module FastlaneCore
         Helper.backticks("xcrun simctl uninstall #{device_udid} #{app_identifier} &> /dev/null")
       end
 
+      def languages(device_udid, device_type, languages)
+        if device_udid
+          locale ||= languages[0].sub("-", "_")
+          plist = {
+            AppleLocale: locale,
+            AppleLanguages: languages
+          }
+          UI.message "Localizing #{device_type} (AppleLocale=#{locale} AppleLanguages=#{languages})"
+          plist_path = "#{ENV['HOME']}/Library/Developer/CoreSimulator/Devices/#{device_udid}/data/Library/Preferences/.GlobalPreferences.plist"
+          File.write(plist_path, Plist::Emit.dump(plist))
+        end
+      end
+
       private
 
       def copy_logfile(device, log_identity, logs_destination_dir)

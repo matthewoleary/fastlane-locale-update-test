@@ -39,6 +39,13 @@ module Scan
             FastlaneCore::Simulator.disable_slide_to_type(udid: device.udid)
           end
         end
+
+        if Scan.config[:languages]
+          languages = Scan.config[:languages]
+          Scan.devices.each do |device|
+            FastlaneCore::Simulator.languages(device.udid, device.name, languages)
+          end
+        end
       end
 
       prelaunch_simulators
